@@ -1,0 +1,44 @@
+'use strict';
+
+const <%= name %>Wrapper = (adapters, applicatioName) => {
+  const get = (request, reply) => {
+<% if (type === 'serverless') { %>
+    let payload = {
+      applicationName: applicatioName,
+      eventSource: applicatioName,
+    };
+    if (request.source) {
+      payload.eventSource = request.source;
+    }
+    if (request.queryStringParameters) {
+      payload.queryStringParameters = request.queryStringParameters;
+    }
+    if (request) {
+      payload = {
+        ...payload,
+        ...request,
+      };
+    }
+<% } else { %>
+    const payload = {
+      ...request.query,
+      applicationName: applicatioName,
+    };
+<% } %>
+    return adapters.get({
+      payload,
+      headers: {
+        ...request.headers,
+      },
+
+      onSuccess: data => reply.response(data).code(200),
+      onError: error => reply.response(error).code(error.statusCode),
+    });
+  };
+  return {
+    get,
+  };
+};
+
+module.exports = <%= name %>Wrapper;
+

@@ -1,0 +1,13 @@
+'use strict';
+
+const factory = require('./factory');
+const config = require('../../config');
+<% if (resource.includes('mongo')){ %>
+const repositoryMongoDb = require('../repository/mongoDb');
+<% } %>
+const adapters = require('../adapters')({
+  config,<% if (resource.includes('mongo')){ %>
+  repositoryMongoDb,<% } %>
+});
+
+module.exports = factory(adapters, config);

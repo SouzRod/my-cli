@@ -1,0 +1,36 @@
+logRetentionInDays: 3
+
+logSubscription:
+  enabled: ${self:custom.LOG_DESCRIPTION_ENABLE.${self:provider.stage}}
+  destinationArn: arn:aws:kinesis:${self:custom.KINESIS_REGIONS.${self:provider.stage}}:${self:custom.ACCOUNT_ID.${self:provider.stage}}:stream/bfb-ms-data-lake-ms-logs-${self:provider.stage}
+  roleArn: arn:aws:iam::${self:custom.ACCOUNT_ID.${self:provider.stage}}:role/bfb-ms-data-lake-cloudwatch-to-streams-role-${self:provider.stage}
+  filterPattern: "{ $.application = * }"
+
+serverless-iam-roles-per-function:
+  iamGlobalPermissionsBoundary: arn:aws:iam::#{AWS::AccountId}:policy/si-permission-boundary
+
+VERSION_FUNCTIONS:
+  dev: true
+  hml: true
+  prd: true
+
+REGIONS:
+  prd: sa-east-1
+  dev: sa-east-1
+  hml: sa-east-1
+
+KINESIS_REGIONS:
+  prd: sa-east-1
+  dev: sa-east-1
+  hml: sa-east-1
+
+DEPLOYMENT_FOLDER:
+  dev: itdigdev
+  hml: itdighml
+  prd: itdig
+
+ACCOUNT_ID:
+  prd: 112842470554
+  hml: 062098967909
+  dev: 432914321234
+

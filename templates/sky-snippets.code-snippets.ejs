@@ -1,0 +1,217 @@
+{
+	"unit test adapter": {
+		"prefix": "unit test adapter",
+		"body": [
+		  "'use strict';",
+		  "",
+		  "const { expect }      = require('chai');",
+		  "const $nameWrapper   = require('../../../../v1/adapters/$name');",
+		  "",
+		  "",
+		  "let mockDependencies;",
+		  "describe('Unit tests for adapters dependencies', () => {",
+		  "  beforeEach('create spies', () => {",
+		  "    mockDependencies = {};",
+		  "  });",
+		  "",
+		  "  context('test dependencies tests', () => {",
+		  "    it('should have a $name adapter created', () => {",
+		  "      const { get } = $nameWrapper(mockDependencies);",
+		  "      expect(get).to.be.a('function');",
+		  "    });",
+		  "",
+		  "    it('should be $name an item in some data', async () => {",
+		  "      expect($nameWrapper).to.be.a('function');",
+		  "      const adapterInstance = $nameWrapper(mockDependencies);",
+		  "      expect(adapterInstance).to.be.instanceOf(Object);",
+		  "      expect(adapterInstance.get).to.be.a('function');",
+		  "    });",
+		  "  });",
+		  "});",
+		  ""
+		],
+		"description": "unit test adapter"
+	  },
+	  "describe": {
+		"prefix": "describeAndIt",
+		"body": [
+		  "describe(\"$describe\", () => {",
+		  "  it(\"$description\", () => {",
+		  "",
+		  "})",
+		  "})"
+		],
+		"description": "describe"
+	  },
+	  "before": {
+		"prefix": "before",
+		"body": [
+		  "before('$description', () => {",
+		  "",
+		  "});",
+		  ""
+		],
+		"description": "before"
+	  },
+	  "afterEach": {
+		"prefix": "afterEach",
+		"body": [
+		  "afterEach(() => {",
+		  "",
+		  "});",
+		  ""
+		],
+		"description": "afterEach"
+	  },
+	  "it": {
+		"prefix": "it",
+		"body": [
+		  "it('$description', () => {",
+		  "",
+		  "});"
+		],
+		"description": "it"
+	  },
+	  "context": {
+		"prefix": "contextAndIt",
+		"body": [
+		  "context('$description', () => {",
+		  "    it('$description', () => {",
+		  "",
+		  "    });",
+		  "});"
+		],
+		"description": "context"
+	  },
+	  "beforeEach": {
+		"prefix": "beforeEach",
+		"body": [
+		  "beforeEach(() => {",
+		  "",
+		  "});",
+		  ""
+		],
+		"description": "beforeEach"
+	  },
+	  "describe": {
+		"prefix": "describe",
+		"body": [
+		  "describe('$description', () => {",
+		  "",
+		  "});"
+		],
+		"description": "describe"
+	  },
+	  "configController": {
+		"prefix": "configController",
+		"body": [
+		  "'use strict';",
+		  "",
+		  "const { ResponseHandler } = require('pkg_sky_core');",
+		  "",
+		  "const configController = (adapters, applicationName) => {",
+		  "",
+		  "  const updateConfig = (request, reply) => {",
+		  "    const payload = {",
+		  "      ...request.query,",
+		  "      ...request.params,",
+		  "      applicationName: applicationName,",
+		  "    };",
+		  "    return adapters.updateConfig({",
+		  "      payload,",
+		  "      headers: {",
+		  "        ...request.headers,",
+		  "      },",
+		  "      onSuccess: (data) => {",
+		  "        ResponseHandler.successHandler({",
+		  "          payload, request, response: data,",
+		  "        });",
+		  "        return reply.response(data).code(200);",
+		  "      },",
+		  "      onError: (error) => {",
+		  "        ResponseHandler.errorHandler({",
+		  "          payload, request, error,",
+		  "        });",
+		  "        return reply.response(error).code(error.statusCode);",
+		  "      },",
+		  "    });",
+		  "  };",
+		  "",
+		  "  return {",
+		  "    updateConfig,",
+		  "  };",
+		  "};",
+		  "",
+		  "module.exports = configController;",
+		  ""
+		],
+		"description": "configController"
+	  },
+	  "cache": {
+		"prefix": "cache",
+		"body": [
+		  "'use strict';",
+		  "",
+		  "const cacheQuery = ({",
+		  "  now,",
+		  "  dateDiff,",
+		  "  cache: {",
+		  "    timeToLive,",
+		  "    keyTimeOut,",
+		  "  },",
+		  "}) => {",
+		  "",
+		  "  const Instance = class CacheQuery {",
+		  "",
+		  "    constructor() {",
+		  "      this.cache = [];",
+		  "      this.clearAll();",
+		  "    }",
+		  "",
+		  "    getItem(articleId) {",
+		  "      const index = this.cache.findIndex(item => item.articleId === articleId);",
+		  "      let item;",
+		  "      if (index !== -1) {",
+		  "        item = { ...this.cache[index] };",
+		  "        delete item.addAt;",
+		  "      }",
+		  "      return { item, index };",
+		  "    }",
+		  "",
+		  "    updateItem(index, { ...item }) {",
+		  "      item.addAt = now();",
+		  "      this.cache[index] = item;",
+		  "    }",
+		  "",
+		  "    addItem({ ...item }) {",
+		  "      item.addAt = now();",
+		  "      this.cache.push(item);",
+		  "    }",
+		  "",
+		  "    getCache() {",
+		  "      return this.cache;",
+		  "    }",
+		  "",
+		  "    isNotExpirated(index) {",
+		  "      const timeElapsed = dateDiff(now(), this.getCache()[index].addAt, 'm');",
+		  "      return (timeElapsed < keyTimeOut);",
+		  "    }",
+		  "",
+		  "    clearAll() {",
+		  "      setInterval(() => {",
+		  "        this.cache = [];",
+		  "      }, timeToLive);",
+		  "    }",
+		  "",
+		  "  };",
+		  "",
+		  "  return new Instance();",
+		  "",
+		  "};",
+		  "",
+		  "",
+		  "module.exports = cacheQuery;"
+		],
+		"description": "cache"
+	  }
+}

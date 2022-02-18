@@ -1,0 +1,47 @@
+service:
+  name: <%= name %>
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  memorySize: 128
+  stage: ${opt:stage, 'dev'}
+  timeout: 180
+  region: us-east-1
+  versionFunctions: false
+  cfnRole: arn:aws:iam::${self:custom.ACCOUNT_ID.${self:provider.stage}}:role/${self:service}-role
+  deploymentBucket:
+    name: sky-${self:custom.DEPLOYMENT_FOLDER.${self:provider.stage}}-sls-deploy
+  stackTags:
+    department: digital-dev
+    projectName: <%= name %>
+    datadog: true
+  environment: ${file(ymls/environment.yml)}
+
+functions: ${file(ymls/functions.yml)}
+resources: ${file(ymls/resources.yml)}
+custom: ${file(ymls/custom.yml)}
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-log-retention
+  - serverless-iam-roles-per-function
+  - serverless-plugin-datadog
+  - serverless-plugin-log-subscription
+  - serverless-cfn-policy-creator
+  - serverless-pseudo-parameters
+
+package:
+  exclude:
+    - node_modules/serverless-**
+    - coverage/**
+    - test/**
+    - .nyc_output/**
+    - .env
+    - .gitignore
+    - package-lock.json
+    - README.md
+    - docs/**
+    - .vscode/**
+    - ymls/**
+    - .editorconfig

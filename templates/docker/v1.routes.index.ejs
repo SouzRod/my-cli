@@ -1,0 +1,25 @@
+'use strict';
+
+const controller = require('../controllers');
+const { <%= name %>Schema } = require('../schemas');
+
+const get = {
+  path: '/v1/<%= name %>',
+  method: 'GET',
+  config: {
+    description: 'Description text here',
+    notes: 'Describe your notes here',
+    tags: ['api'],
+    handler: controller.get,
+    validate: {
+      options: {
+        allowUnknown: true,
+      },
+      query: <%= name %>Schema.request.get,
+    },
+  },
+};
+
+module.exports = [
+  get,
+];

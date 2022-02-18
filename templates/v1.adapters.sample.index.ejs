@@ -1,0 +1,36 @@
+'use strict';
+
+const <%= name %>Wrapper = ({
+  config,<% if (resource.includes('mongo')){ %>
+  // repositoryMongoDb,<% } %>
+}) => {
+  const get = async ({
+    payload,
+    headers,
+    onSuccess,
+    onError,
+  }) => {
+    try {
+      const req = {<% if (type === 'docker'){ %>
+        message: `Running application on port ${config.app.port}...`,<% } %><% if (type == 'serverless'){ %>
+        message: 'Event lambda...',<% } %>
+        params: payload,
+        headers,
+      };
+      <% if (resource.includes('mongo')){ %>// - adjust your query and return as you wish
+      /*
+      const result = await repositoryMongoDb.testCollection.findOne({});
+      */<% } %>const resp = `${req.message} - params: ${JSON.stringify(req.params)} - host: ${req.headers.host}`;
+
+      return onSuccess(resp);
+    } catch (errorCatch) {
+      return onError(errorCatch);
+    }
+  };
+  return {
+    get,
+  };
+
+};
+
+module.exports = <%= name %>Wrapper;

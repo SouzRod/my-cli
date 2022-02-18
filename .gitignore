@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+
+# Typescript v1 declaration files
+typings/
+
+# Optional npm cache directory
+.npm
+
+# coverage
+coverage
+
+# Optional
+package-lock.json
+
+# Output of 'npm pack'
+*.tgz
+
+# VS Code
+.vscode
+
+# PHP Storm
+.idea/

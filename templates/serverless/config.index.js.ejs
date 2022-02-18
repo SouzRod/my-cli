@@ -1,0 +1,28 @@
+'use strict';
+
+require('dotenv').config();
+
+// This is a minimal configuration to works with pkg-sky-core
+module.exports = {
+  applicationName: process.env.SERVICE,
+  environment: process.env.STAGE,
+  logger: {
+    name: process.env.SERVICE,
+  },
+  logs: {
+    application: process.env.APPLICATION_LOG,
+    environment: process.env.ENVIRONMENT_LOG,
+  },
+  <% if (resource.includes('mongo')) { %>
+  mongo: {
+    host: process.env.MONGO_DB_HOST,
+    dbName: process.env.MONGO_DB_NAME,
+    collections: {
+      collectionName: process.env.COLLECTION,
+    },
+    limitServicesLambda: process.env.LIMIT_FIND_LAMBDA_SERVICES,
+  },
+  <% } %>
+};
+ // After defining this values, take it off
+console.error('===== You must define some parameters ! ======');

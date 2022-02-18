@@ -1,0 +1,9 @@
+get:
+  handler: index.get
+  memorySize: 128
+  timeout: 30
+  iamRoleStatementsName: ${self:service}-${self:provider.stage}-get-lambda-role
+  events:
+    - http:
+        path: test
+        method: get
