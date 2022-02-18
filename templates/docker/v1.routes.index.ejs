@@ -1,7 +1,7 @@
 'use strict';
 
 const controller = require('../controllers');
-const { <%= name %>Schema } = require('../schemas');
+//const <%= name %>Schema = require('../schemas');
 
 const get = {
   path: '/v1/<%= name %>',
@@ -15,7 +15,7 @@ const get = {
       options: {
         allowUnknown: true,
       },
-      query: <%= name %>Schema.request.get,
+      //query: <%= name %>Schema.request.get,
     },
   },
 };
