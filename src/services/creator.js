@@ -17,8 +17,8 @@ module.exports.createApp = async ({ readFile, render, files, exec, outputFile, c
     return `${removeFirstIndex}${transformedString.join("").trim()}`
   }
   const returnsFilesBasedOnTerminalInput = commands => {
-    const { type, name, resource } = commands
-    const fileToRender = files(removeHyphenFromProjectName(name)).filter(file => {
+    const { type, resource } = commands
+    const fileToRender = files().filter(file => {
       if (resource.includes('mongo') && resource.includes('n/d')) {
         throw new Error('You cannot mark n/d along with some database');
       }
