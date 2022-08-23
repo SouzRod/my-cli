@@ -32,6 +32,7 @@ module.exports.createApp = async ({ readFile, render, files, exec, outputFile, c
     const { name, type, resource } = commands
     const commandsToRenderEJS = {
       name: removeHyphenFromProjectName(name),
+      completeName: name,
       type,
       resource
     }
