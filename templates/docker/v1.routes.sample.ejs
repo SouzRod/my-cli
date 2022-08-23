@@ -3,7 +3,7 @@
 const { sample } = require('../controllers');
 //const schemas = require('../schemas');
 
-const get = {
+module.exports = {
   path: '/v1/sample',
   method: 'GET',
   config: {
@@ -19,7 +19,3 @@ const get = {
     },
   },
 };
-
-module.exports = [
-  get,
-];
