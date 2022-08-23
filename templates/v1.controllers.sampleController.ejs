@@ -1,6 +1,6 @@
 'use strict';
 
-const <%= name %>Wrapper = (adapters, applicatioName) => {
+const sampleWrapper = (adapters, applicatioName) => {
   const handler = (request, reply) => {
 <% if (type === 'serverless') { %>
     let payload = {
@@ -25,7 +25,7 @@ const <%= name %>Wrapper = (adapters, applicatioName) => {
       applicationName: applicatioName,
     };
 <% } %>
-    return adapters.handler({
+    return adapters.sample({
       payload,
       headers: {
         ...request.headers,
@@ -40,5 +40,5 @@ const <%= name %>Wrapper = (adapters, applicatioName) => {
   };
 };
 
-module.exports = <%= name %>Wrapper;
+module.exports = sampleWrapper;
 

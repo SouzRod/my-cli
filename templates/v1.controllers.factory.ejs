@@ -1,10 +1,10 @@
 'use strict';
 
 const application = require('../../package.json');
-const <%= name %>Controller = require('./<%= name %>Controller');
+const sampleController = require('./sampleController');
 
 module.exports = (adapters, config) => ({
-  <%= name %>: <%= name %>Controller(
+  sample: sampleController(
     adapters,
     application.name,
     config,

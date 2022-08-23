@@ -1,9 +1,9 @@
 'use strict';
 
-const <%= name %>Wrapper = require('./<%= name %>');
+const sampleWrapper = require('./<%= name %>');
 
 module.exports = dependencies => ({
-  handler: <%= name %>Wrapper({
+  sample: sampleWrapper({
     config: dependencies.config,<% if (resource.includes('mongo')){ %>
     repositoryMongoDb: dependencies.repositoryMongoDb,<% } %>
   }).handler,

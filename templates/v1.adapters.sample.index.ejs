@@ -1,6 +1,6 @@
 'use strict';
 
-const <%= name %>Wrapper = ({
+const sampleWrapper = ({
   config,<% if (resource.includes('mongo')){ %>
   // repositoryMongoDb,<% } %>
 }) => {
@@ -33,4 +33,4 @@ const <%= name %>Wrapper = ({
 
 };
 
-module.exports = <%= name %>Wrapper;
+module.exports = sampleWrapper;
