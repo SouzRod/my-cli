@@ -1,44 +1,42 @@
 'use strict';
 
-const sampleWrapper = (adapters, applicatioName) => {
-  const handler = (request, reply) => {
-<% if (type === 'serverless') { %>
-    let payload = {
-      applicationName: applicatioName,
-      eventSource: applicatioName,
-    };
-    if (request.source) {
-      payload.eventSource = request.source;
-    }
-    if (request.queryStringParameters) {
-      payload.queryStringParameters = request.queryStringParameters;
-    }
-    if (request) {
-      payload = {
-        ...payload,
-        ...request,
-      };
-    }
-<% } else { %>
-    const payload = {
-      ...request.query,
-      applicationName: applicatioName,
-    };
-<% } %>
-    return adapters.sample({
-      payload,
-      headers: {
-        ...request.headers,
-      },
-
-      onSuccess: data => reply.response(data).code(200),
-      onError: error => reply.response(error).code(error.statusCode),
-    });
-  };
+module.exports = (adapters, applicatioName) => {
   return {
-    handler,
+    handler(request, reply) {
+      <% if (type === 'serverless') { %>
+        let payload = {
+          applicationName: applicatioName,
+          eventSource: applicatioName,
+        };
+        if (request.source) {
+          payload.eventSource = request.source;
+        }
+        if (request.queryStringParameters) {
+          payload.queryStringParameters = request.queryStringParameters;
+        }
+        if (request) {
+          payload = {
+            ...payload,
+            ...request,
+          };
+        }
+    <% } else { %>
+        const payload = {
+          ...request.query,
+          applicationName: applicatioName,
+        };
+    <% } %>
+
+      const headers = {
+        ...request.headers,
+      };
+
+      return adapters.sample({
+        payload,
+        headers,
+        onSuccess: data => reply.response(data).code(200),
+        onError: error => reply.response(error).code(error.statusCode),
+      });
+    },
   };
 };
-
-module.exports = sampleWrapper;
-
