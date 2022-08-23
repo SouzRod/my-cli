@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "check": "depcheck --ignores husky,mochawesome,babel-cli,eslint-config-airbnb,eslint-plugin-jsx-a11y,eslint-plugin-react<% if (type  === 'serverless'){ %>,serverless-iam-roles-per-function,serverless-offline,serverless-plugin-log-retention<% } %>",
+      "check": "depcheck --ignores joi,husky,mochawesome,babel-cli,eslint-config-airbnb,eslint-plugin-jsx-a11y,eslint-plugin-react<% if (type  === 'serverless'){ %>,serverless-iam-roles-per-function,serverless-offline,serverless-plugin-log-retention<% } %>",
       "start": "node index.js",
       "pretest": "npm run lint && npm run check",
       "test": "npm run test:coverage",
@@ -45,6 +45,8 @@
       "serverless-plugin-log-subscription": "1.2.0",
       "serverless-pseudo-parameters": "^2.5.0",<% } %>
       "clone-deep": "^4.0.1",
+      "depcheck": "^1.4.3",
+      "eslint": "^8.22.0",
       "husky": "^4.3.8",
       "mocha": "^6.1.4",
       "nodemon": "^1.17.1",

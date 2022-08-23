@@ -1,6 +1,7 @@
 module.exports = name =>  [
   { path: '.editorconfig', template: '.editorconfig.ejs' },
   { path: '.gitignore', template: '.gitignore.ejs' },
+  { path: '.eslintrc.json', template: '.eslintrc.json.ejs' },
   { path: '.vscode/launch.json', template: '.vscode.launch.json.ejs' },
   { path: 'package.json', template: 'package.json.ejs'},
   { path: `test/v1/unit/${name}/${name}.spec.js`, template: 'test.unit.sample.sample.ejs' },

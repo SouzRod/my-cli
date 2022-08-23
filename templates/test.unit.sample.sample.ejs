@@ -1,7 +1,6 @@
 'use strict';
 
 const { expect }      = require('chai');
-const objSinon        = require('sinon');
 cosnt cloneDeep       = require('clone-deep');
 
 const adapters        = require('../../../../v1/adapters');
@@ -19,11 +18,11 @@ describe('Unit tests for <%= name %> adapter', () => {
       },
       payload: {},<% if (resource.includes('mongo')){ %> /* repositoryMongoDb: {
         testCollection: {
-          findOne: objSinon.spy(() => Promise.resolve({})),
+          findOne: () => Promise.resolve({}),
         },
       }, */<% } %>
-      onSuccess: objSinon.spy(onSuccess => onSuccess),
-      onError: objSinon.spy(onError => onError),
+      onSuccess: params => params,
+      onError: params => params,
     };
   });
 
@@ -41,8 +40,7 @@ describe('Unit tests for <%= name %> adapter', () => {
 
   context('Handler ok', () => {
     it('should return object success when handler method', async () => {
-      await <%= name %>Wrapper(mockDependencies).handler(mockDependencies);
-      const result = mockDependencies.onSuccess.returnValues[0];<% if (type == 'docker'){ %>
+      const result = await <%= name %>Wrapper(mockDependencies).handler(mockDependencies);<% if (type == 'docker'){ %>
       expect(result).to.be.contain('Running application on port 3001...');<% } %><% if (type == 'serverless'){ %>
       expect(result).to.be.contain('Event lambda...');<% } %>
     });
@@ -52,6 +50,7 @@ describe('Unit tests for <%= name %> adapter', () => {
     it('should return error 500 in handler method', async () => {
       const dependencies = cloneDeep(mockDependencies);
       dependencies.config = null;
+
       const result = await <%= name %>Wrapper(dependencies).handler(dependencies);
       expect(result).to.have.property('stack');
       expect(result).to.have.property('message');
