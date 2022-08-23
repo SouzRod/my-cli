@@ -1,7 +1,6 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
-const config = require('./config');
 const routes = require('./v1/routes');
 const plugins = require('./plugins');
 const { app: { port }, stripPrefix, useRoutePrefix } = require('./config');
