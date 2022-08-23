@@ -24,6 +24,7 @@ module.exports = () =>  [
   { path: 'plugins/vision/index.js', template: '/docker/plugins.vision.index.ejs', type: ['docker'] },
   { path: 'server.js', template: '/docker/server.js.ejs', type: ['docker'] },
   { path: 'v1/routes/index.js', template: '/docker/v1.routes.index.ejs', type: ['docker'] },
+  { path: 'v1/routes/sample.js', template: '/docker/v1.routes.sample.ejs', type: ['docker'] },
   { path: 'commons/mongo/factory.js', template: '/mongo/mongo.factory.ejs', resource: ['mongo'] },
   { path: 'commons/mongo/index.js', template: '/mongo/mongo.index.ejs', resource: ['mongo'] },
   { path: 'v1/repository/factory.js', template: '/mongo/v1.repository.factory.ejs', resource: ['mongo'] },

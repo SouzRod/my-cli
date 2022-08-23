@@ -1,25 +1,7 @@
 'use strict';
 
-const { sample } = require('../controllers');
-//const schemas = require('../schemas');
-
-const get = {
-  path: '/v1/sample',
-  method: 'GET',
-  config: {
-    description: 'Description text here',
-    notes: 'Describe your notes here',
-    tags: ['api'],
-    handler: sample,
-    validate: {
-      options: {
-        allowUnknown: true,
-      },
-      //query: schemas.sample.query,
-    },
-  },
-};
+const sample = require('./sample');
 
 module.exports = [
-  get,
+  sample,
 ];
