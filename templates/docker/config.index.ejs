@@ -9,7 +9,7 @@ module.exports = {
   },
   plugins: {
     swagger: {
-      basePath: Object.is(process.env.SWAGGER_VERSIONING, 'true')
+      basePath: process.env.USE_ROUTE_PREFIX === 'true'
         ? `/api/${process.env.SERVICE_NAME.replace(/-/g, '')}/` : '/',
     },
   },
