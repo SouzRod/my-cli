@@ -17,7 +17,7 @@ $ node -v
 ```shell
 $ git clone https://github.com/SouzRod/my-cli.git
 $ cd my-cli
-$ npm install -g
+$ npm i -g
 ```
 
 #### Run the project with:
