@@ -2,6 +2,8 @@
 
 const { expect }      = require('chai');
 const objSinon        = require('sinon');
+cosnt cloneDeep       = require('clone-deep');
+
 const adapters        = require('../../../../v1/adapters');
 const <%= name %>Wrapper   = require('../../../../v1/adapters/<%= name %>');
 const config          = require('../../../../config');
@@ -26,30 +28,31 @@ describe('Unit tests for <%= name %> adapter', () => {
   });
 
   context('smoke tests', () => {
-    it('should have a get adapter created', () => {
-      const { get } = adapters(mockDependencies);
-      expect(get).to.be.a('function');
+    it('should have a handler adapter created', () => {
+      const { handler } = adapters(mockDependencies);
+      expect(handler).to.be.a('function');
     });
 
-    it('should have a get <%= name %>Wrapper created', async () => {
-      const { get } = <%= name %>Wrapper(mockDependencies);
-      expect(get).to.be.a('function');
+    it('should have a handler <%= name %>Wrapper created', async () => {
+      const { handler } = <%= name %>Wrapper(mockDependencies);
+      expect(handler).to.be.a('function');
     });
   });
 
-  context('Get ok', () => {
-    it('should return object success when get method', async () => {
-      await <%= name %>Wrapper(mockDependencies).get(mockDependencies);
+  context('Handler ok', () => {
+    it('should return object success when handler method', async () => {
+      await <%= name %>Wrapper(mockDependencies).handler(mockDependencies);
       const result = mockDependencies.onSuccess.returnValues[0];<% if (type == 'docker'){ %>
       expect(result).to.be.contain('Running application on port 3001...');<% } %><% if (type == 'serverless'){ %>
       expect(result).to.be.contain('Event lambda...');<% } %>
     });
   });
 
-  context('Get error', () => {
-    it('should return error 500 in get method', async () => {
-      mockDependencies.config = null;
-      const result = await <%= name %>Wrapper(mockDependencies).get(mockDependencies);
+  context('Handler error', () => {
+    it('should return error 500 in handler method', async () => {
+      const dependencies = cloneDeep(mockDependencies);
+      dependencies.config = null;
+      const result = await <%= name %>Wrapper(dependencies).handler(dependencies);
       expect(result).to.have.property('stack');
       expect(result).to.have.property('message');
     });

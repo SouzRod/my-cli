@@ -3,8 +3,8 @@
 const <%= name %>Wrapper = require('./<%= name %>');
 
 module.exports = dependencies => ({
-  get: <%= name %>Wrapper({
+  handler: <%= name %>Wrapper({
     config: dependencies.config,<% if (resource.includes('mongo')){ %>
     repositoryMongoDb: dependencies.repositoryMongoDb,<% } %>
-  }).get,
+  }).handler,
 });

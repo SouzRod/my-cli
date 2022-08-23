@@ -4,9 +4,9 @@ const application = require('../../package.json');
 const <%= name %>Controller = require('./<%= name %>Controller');
 
 module.exports = (adapters, config) => ({
-  get: <%= name %>Controller(
+  <%= name %>: <%= name %>Controller(
     adapters,
     application.name,
     config,
-  ).get,
+  ).handler,
 });

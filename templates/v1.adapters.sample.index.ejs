@@ -4,7 +4,7 @@ const <%= name %>Wrapper = ({
   config,<% if (resource.includes('mongo')){ %>
   // repositoryMongoDb,<% } %>
 }) => {
-  const get = async ({
+  const handler = async ({
     payload,
     headers,
     onSuccess,
@@ -28,7 +28,7 @@ const <%= name %>Wrapper = ({
     }
   };
   return {
-    get,
+    handler,
   };
 
 };

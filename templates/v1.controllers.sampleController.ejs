@@ -1,7 +1,7 @@
 'use strict';
 
 const <%= name %>Wrapper = (adapters, applicatioName) => {
-  const get = (request, reply) => {
+  const handler = (request, reply) => {
 <% if (type === 'serverless') { %>
     let payload = {
       applicationName: applicatioName,
@@ -25,7 +25,7 @@ const <%= name %>Wrapper = (adapters, applicatioName) => {
       applicationName: applicatioName,
     };
 <% } %>
-    return adapters.get({
+    return adapters.handler({
       payload,
       headers: {
         ...request.headers,
@@ -36,7 +36,7 @@ const <%= name %>Wrapper = (adapters, applicatioName) => {
     });
   };
   return {
-    get,
+    handler,
   };
 };
 

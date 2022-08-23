@@ -3,7 +3,6 @@ module.exports = name =>  [
   { path: '.gitignore', template: '.gitignore.ejs' },
   { path: '.vscode/launch.json', template: '.vscode.launch.json.ejs' },
   { path: 'package.json', template: 'package.json.ejs'},
-  { path: 'test/v1/unit/adapters/adapters.spec.js', template: 'test.unit.adapters.adapters.ejs' },
   { path: `test/v1/unit/${name}/${name}.spec.js`, template: 'test.unit.sample.sample.ejs' },
   { path: 'v1/adapters/index.js', template: 'v1.adapters.index.ejs' },
   { path: `v1/adapters/${name}/index.js`, template: 'v1.adapters.sample.index.ejs' },
