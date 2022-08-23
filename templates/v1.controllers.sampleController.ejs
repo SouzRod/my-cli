@@ -4,29 +4,28 @@ module.exports = (adapters, applicatioName) => {
   return {
     handler(request, reply) {
       <% if (type === 'serverless') { %>
-        let payload = {
-          applicationName: applicatioName,
-          eventSource: applicatioName,
+      let payload = {
+        applicationName: applicatioName,
+        eventSource: applicatioName,
+      };
+      if (request.source) {
+        payload.eventSource = request.source;
+      }
+      if (request.queryStringParameters) {
+        payload.queryStringParameters = request.queryStringParameters;
+      }
+      if (request) {
+        payload = {
+          ...payload,
+          ...request,
         };
-        if (request.source) {
-          payload.eventSource = request.source;
-        }
-        if (request.queryStringParameters) {
-          payload.queryStringParameters = request.queryStringParameters;
-        }
-        if (request) {
-          payload = {
-            ...payload,
-            ...request,
-          };
-        }
+      }
     <% } else { %>
-        const payload = {
-          ...request.query,
-          applicationName: applicatioName,
-        };
+      const payload = {
+        ...request.query,
+        applicationName: applicatioName,
+      };
     <% } %>
-
       const headers = {
         ...request.headers,
       };
