@@ -3,12 +3,12 @@
 const Hapi = require('@hapi/hapi');
 const routes = require('./v1/routes');
 const plugins = require('./plugins');
-const { app: { port }, stripPrefix, useRoutePrefix } = require('./config');
+const { app: { port }, stripPrefix } = require('./config');
 
-module.exports = (async () => {
+module.exports = async () => {
   const server = Hapi.server({ port, router: { isCaseSensitive: false } });
 
-  if (useRoutePrefix) {
+  if (stripPrefix.useRoutePrefix) {
     server.realm.modifiers.route.prefix = stripPrefix.path;
   }
 
@@ -16,4 +16,4 @@ module.exports = (async () => {
   server.route(routes);
 
   return server;
-})();
+};

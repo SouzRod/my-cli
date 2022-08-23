@@ -5,8 +5,8 @@ require('dotenv').config();
 module.exports = {
   stripPrefix: {
     path: `/api/${process.env.SERVICE_NAME.replace(/-/g, '')}`,
+    useRoutePrefix: process.env.USE_ROUTE_PREFIX === 'true',
   },
-  useRoutePrefix: process.env.USE_ROUTE_PREFIX === 'true',
   plugins: {
     swagger: {
       basePath: Object.is(process.env.SWAGGER_VERSIONING, 'true')
